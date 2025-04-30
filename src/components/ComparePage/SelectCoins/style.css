@@ -1,0 +1,7 @@
+.coins-flex{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 1.5rem;
+    margin-bottom: 0rem 1.5rem;
+}

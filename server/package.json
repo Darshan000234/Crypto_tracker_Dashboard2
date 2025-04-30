@@ -1,0 +1,14 @@
+{
+  "name": "dashboard-server",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "express": "^5.1.0",
+    "axios": "^1.8.4",
+    "cors": "^2.8.5"
+  },
+  "scripts": {
+    "start": "node server.mjs"
+  }
+}
