@@ -5,6 +5,10 @@ import HomePage from './pages/Home';
 import DashboardPage from './pages/Dashboard';
 import CoinPage from './pages/Coin';
 import ComparePage from './pages/ComparePage';
+// import staticCoins from "./functions/staticcoins"; // if saved in a separate file
+
+// Store coins in localStorage
+
 function App() {
   return (
     <div className='App'>

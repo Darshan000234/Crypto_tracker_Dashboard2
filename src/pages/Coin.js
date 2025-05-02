@@ -65,7 +65,6 @@ const Coin = () => {
     setPriceType(newType);
     setLoading(false);
   };
-
   return (
     <div>
       <Header />
@@ -85,5 +84,4 @@ const Coin = () => {
     </div>
   );
 };
-
 export default Coin;

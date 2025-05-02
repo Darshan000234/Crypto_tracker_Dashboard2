@@ -7,6 +7,7 @@ export const getCoinPrices = async (id, days, PriceType) => {
   const localData = localStorage.getItem(`coinPrices_${key}`);
   const localTime = localStorage.getItem(`coinPricesTime_${key}`);
 
+  // If data is cached in localStorage and is less than 30 seconds old, use it
   if (localData && localTime && (now - parseInt(localTime) < 30000)) {
     console.log(`✅ Using fresh localStorage cached prices for ${key}`);
     return JSON.parse(localData);
@@ -15,6 +16,7 @@ export const getCoinPrices = async (id, days, PriceType) => {
   try {
     console.log("Fetching price data for:", id);
 
+    // Make API request to CoinGecko
     const response = await axios.get(
       `https://api.coingecko.com/api/v3/coins/${id}/market_chart`,
       {
@@ -35,11 +37,11 @@ export const getCoinPrices = async (id, days, PriceType) => {
       result = response.data.prices;
     }
 
-    // ✅ Delete old localStorage
+    // ✅ Delete old localStorage data
     localStorage.removeItem(`coinPrices_${key}`);
     localStorage.removeItem(`coinPricesTime_${key}`);
 
-    // ✅ Save new localStorage
+    // ✅ Save new localStorage data
     localStorage.setItem(`coinPrices_${key}`, JSON.stringify(result));
     localStorage.setItem(`coinPricesTime_${key}`, now.toString());
 
@@ -48,6 +50,7 @@ export const getCoinPrices = async (id, days, PriceType) => {
   } catch (error) {
     console.error(`❌ Error fetching price data for ${id}:`, error);
 
+    // If local data is available, use it as a backup
     if (localData) {
       console.log(`⚡ Using expired localStorage data for ${key} as backup`);
       return JSON.parse(localData);

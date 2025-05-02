@@ -34,7 +34,7 @@ const DashboardPage = () => {
   const getData = async () => {
     const mycoin = await get100Coin();
     console.log(mycoin);
-    if(mycoin){
+    if (mycoin) {
       setCoins(mycoin);
       setPaginatedCoins(mycoin.slice(0, 10));
       setLoading(false);
@@ -48,28 +48,24 @@ const DashboardPage = () => {
   };
   return (
     <div>
-      <Header/>
+      <Header />
       <Backtotop />
       {loading ? (
         <Loader />
-      ) : (
-        <>
-          <Search search={search} handleChange={handleChange} />
+      ) : (<><Search search={search} handleChange={handleChange} />
           <TabsComponent
             coins={search ? filteredCoins : paginatedCoins}
-            setSearch={setSearch}
-          />
+            setSearch={setSearch}/>
           {!search && (
             <PaginationComponent
               page={page}
               handlePageChange={handlePageChange}
+              count={Math.ceil(coins.length / 10)}  // ✅ dynamic count
             />
           )}
         </>
       )}
-      
     </div>
   )
 }
-
 export default DashboardPage

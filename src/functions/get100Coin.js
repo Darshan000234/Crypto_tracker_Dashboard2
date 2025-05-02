@@ -2,18 +2,14 @@ import axios from "axios";
 
 let cachedData = null;
 let lastFetchTime = 0;
-
 export const get100Coin = async () => {
   const now = Date.now();
-
-  const localData = localStorage.getItem("coinsData");
-  const localTime = localStorage.getItem("coinsDataTime");
-
+  const localData = localStorage.getItem("marketCoinList");
+  const localTime = localStorage.getItem("marketCoinListTime");
   if (localData && localTime && (now - parseInt(localTime) < 30000)) {
     console.log("✅ Using fresh localStorage data");
     return JSON.parse(localData);
   }
-
   if (cachedData && now - lastFetchTime < 30000) {
     console.log("✅ Using fresh in-memory data");
     return cachedData;
@@ -26,7 +22,7 @@ export const get100Coin = async () => {
         params: {
           vs_currency: "usd",
           order: "market_cap_desc",
-          per_page: 100,
+          per_page: 50,
           page: 1,
           sparkline: false,
         },
@@ -37,12 +33,12 @@ export const get100Coin = async () => {
     lastFetchTime = now;
 
     // ✅ Delete old localStorage
-    localStorage.removeItem("coinsData");
-    localStorage.removeItem("coinsDataTime");
+    localStorage.removeItem("marketCoinList");
+    localStorage.removeItem("marketCoinListTime");
 
     // ✅ Save new localStorage
-    localStorage.setItem("coinsData", JSON.stringify(response.data));
-    localStorage.setItem("coinsDataTime", now.toString());
+    localStorage.setItem("marketCoinList", JSON.stringify(response.data));
+    localStorage.setItem("marketCoinListTime", now.toString());
 
     console.log("✅ Fresh data fetched and updated localStorage");
     return response.data;
